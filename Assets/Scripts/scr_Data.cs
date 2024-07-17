@@ -44,5 +44,6 @@ public struct D_Items
 public struct D_Item
 {
     public string Name;
+    public E_ItemType Type;
     public string Img;
 }
