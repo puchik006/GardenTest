@@ -9,18 +9,17 @@ public struct D_MainSettings
     public string str_InventoryName;
 }
 
-
 //Inventory
 [Serializable]
 public struct D_Inventory
 {
-    public List<D_InventoryItem> Inventory;
+    public List<D_InventoryItem> ListOfItems;
 }
 
 [Serializable]
 public struct D_InventoryItem
 {
-    public D_Item item;
+    public string ItemName; //key to D_Item
     public int Quantity;
 }
 

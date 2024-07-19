@@ -10,7 +10,7 @@ public class scr_FilesManager_ItemsLoader: MonoBehaviour
     {
         _jsonHandler = new scr_JSONHandler();
 
-        _jsonHandler.V_ReadDataFromFile<D_Items>("Items.json");
+        _jsonHandler.V_ReadDataFromJSONFile<D_Items>("Items.json");
     }
 
 }

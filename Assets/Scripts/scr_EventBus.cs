@@ -21,6 +21,8 @@ public class scr_EventBus
 
     //Inventory
     public Action<D_InventoryItem> ItemButtonPressed;
+    public Action<D_InventoryItem> PlayerTryingToTakeItem;
+    public Action<D_InventoryItem> PlayerTookItem;
 
 
     //
