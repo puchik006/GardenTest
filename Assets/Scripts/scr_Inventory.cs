@@ -13,6 +13,7 @@ public class scr_Inventory
     {
         _jsonHandler = new scr_JSONHandler();
         scr_EventBus.Instance.PlayerTryingToTakeItem += V_OnPlayerTakeItem;
+        scr_EventBus.Instance.ButtonDeletePressed += V_OnButtonDeletePressed;
         V_CheckInventory();
     }
 
@@ -45,10 +46,23 @@ public class scr_Inventory
             }
         }
 
-        //Save inventory
         _jsonHandler.V_SaveDataToJSONFile(m_General.GET_InventoryName, _d_Inventory);
         V_CheckInventory();
         scr_EventBus.Instance.PlayerTookItem?.Invoke(item);
+    }
+
+    private void V_OnButtonDeletePressed(D_InventoryItem item)
+    {
+        D_InventoryItem existingItem = _d_Inventory.ListOfItems.Find(i => i.ItemName == item.ItemName);
+
+        if (existingItem.ItemName != null)
+        {
+             _d_Inventory.ListOfItems.Remove(existingItem);
+
+            _jsonHandler.V_SaveDataToJSONFile(m_General.GET_InventoryName, _d_Inventory);
+            V_CheckInventory();
+            scr_EventBus.Instance.PlayerTookItem?.Invoke(item);
+        }
     }
 }
 

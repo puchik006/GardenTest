@@ -23,9 +23,9 @@ public class scr_EventBus
     public Action<D_InventoryItem> ItemButtonPressed;
     public Action<D_InventoryItem> PlayerTryingToTakeItem;
     public Action<D_InventoryItem> PlayerTookItem;
+    public Action<D_InventoryItem> ButtonDeletePressed;
 
-
-    //
+    //GamaPhase
     //public Action<E_GamePhase> GamePhaseUpdate;
 
 
