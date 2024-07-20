@@ -5,10 +5,12 @@ using UnityEngine;
 public class scr_ItemsLoader : MonoBehaviour
 {
     [SerializeField] private D_Items _d_Items;
-    public string itemsFolderPath = "Items";
+    [SerializeField] private string itemsFolderPath = "Items";
+    private scr_JSONHandler _jsonHandler;
 
     private void Awake()
     {
+        _jsonHandler = new scr_JSONHandler();
         _d_Items = V_LoadItems();
     }
 
@@ -40,7 +42,7 @@ public class scr_ItemsLoader : MonoBehaviour
                 D_Item newItem = new D_Item
                 {
                     Name = itemName,
-                    Type = E_ItemType.Weapon, 
+                    Type = E_ItemType.Weapon, //default type
                     Img = Path.GetFileName(imagePath)
                 };
 
@@ -51,6 +53,8 @@ public class scr_ItemsLoader : MonoBehaviour
         D_Items dItems = new D_Items { Items = items };
 
         Debug.Log("Items loaded successfully.");
+
+        _jsonHandler.V_SaveDataToJSONFile(itemsFolderPath + ".json", dItems);
 
         return dItems;
     }
