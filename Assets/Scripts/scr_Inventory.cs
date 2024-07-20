@@ -1,5 +1,4 @@
 ﻿using System;
-using UnityEngine;
 using static scr_General;
 
 public class scr_Inventory
@@ -19,20 +18,18 @@ public class scr_Inventory
 
     public void V_CheckInventory()
     {
-        _d_Inventory = _jsonHandler.V_ReadDataFromJSONFile<D_Inventory>("Inventory.json");
+        _d_Inventory = _jsonHandler.V_ReadDataFromJSONFile<D_Inventory>("Inventory.json"); // CHANGE IT!
     }
 
     private void V_OnPlayerTakeItem(D_InventoryItem item)
     {
-        // Check if item is new in inventory
         D_InventoryItem existingItem = _d_Inventory.ListOfItems.Find(i => i.ItemName == item.ItemName);
 
         if (existingItem.ItemName != null)
         {
-            // Update existing item quantity
             existingItem.Quantity += item.Quantity;
             int index = _d_Inventory.ListOfItems.FindIndex(i => i.ItemName == item.ItemName);
-            _d_Inventory.ListOfItems[index] = existingItem; // Update the item in the list
+            _d_Inventory.ListOfItems[index] = existingItem;
         }
         else
         {
@@ -46,9 +43,7 @@ public class scr_Inventory
             }
         }
 
-        _jsonHandler.V_SaveDataToJSONFile(m_General.GET_InventoryName, _d_Inventory);
-        V_CheckInventory();
-        scr_EventBus.Instance.PlayerTookItem?.Invoke(item);
+        V_UpdateInventory(item);
     }
 
     private void V_OnButtonDeletePressed(D_InventoryItem item)
@@ -59,10 +54,21 @@ public class scr_Inventory
         {
              _d_Inventory.ListOfItems.Remove(existingItem);
 
-            _jsonHandler.V_SaveDataToJSONFile(m_General.GET_InventoryName, _d_Inventory);
-            V_CheckInventory();
-            scr_EventBus.Instance.PlayerTookItem?.Invoke(item);
+            V_UpdateInventory(item);
         }
+    }
+
+    private void V_UpdateInventory(D_InventoryItem item)
+    {
+        _jsonHandler.V_SaveDataToJSONFile(m_General.GET_InventoryName, _d_Inventory);
+        V_CheckInventory();
+        scr_EventBus.Instance.PlayerTookItem?.Invoke(item);
+    }
+
+    ~scr_Inventory()
+    {
+        scr_EventBus.Instance.PlayerTryingToTakeItem -= V_OnPlayerTakeItem;
+        scr_EventBus.Instance.ButtonDeletePressed -= V_OnButtonDeletePressed;
     }
 }
 

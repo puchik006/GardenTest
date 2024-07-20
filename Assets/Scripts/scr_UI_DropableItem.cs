@@ -19,7 +19,7 @@ public class scr_UI_DropableItem : MonoBehaviour
     {
         if (string.IsNullOrEmpty(itemName)) return;
 
-        string imagePath = Path.Combine(Application.persistentDataPath, "Items", itemName, itemName + ".png");
+        string imagePath = Path.Combine(Application.persistentDataPath, "Items", itemName, itemName + ".png"); //CHANGE IT!!!
 
         Sprite sprite = _imageLoader.GetSpriteFromPath(imagePath);
 

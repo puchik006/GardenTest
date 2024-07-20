@@ -476,6 +476,7 @@ MonoBehaviour:
   _btnDelete: {fileID: 5274390802632769658}
   _icon: {fileID: 4079262867868214609}
   _quantity: {fileID: 4079262869046431541}
+  _backGroundQuantity: {fileID: 4079262867531855071}
 --- !u!1 &4079262869046431539
 GameObject:
   m_ObjectHideFlags: 0

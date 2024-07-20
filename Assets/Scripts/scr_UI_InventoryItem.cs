@@ -9,8 +9,10 @@ public class scr_UI_InventoryItem: MonoBehaviour
     [SerializeField] private Button _btnDelete;
     [SerializeField] private Image _icon;
     [SerializeField] private TMP_Text _quantity;
+    [SerializeField] private GameObject _backGroundQuantity;
     private D_InventoryItem _item;
     private scr_Media_ImageLoader _imageLoader;
+    private const int MIN_QUANTITY_TO_SHOW = 2;
 
     void Awake()
     {
@@ -24,6 +26,7 @@ public class scr_UI_InventoryItem: MonoBehaviour
 
         _icon.color = Color.white;
         _icon.sprite = _imageLoader.GetSpriteFromPath(imagePath);
+        _backGroundQuantity.SetActive(item.Quantity >= MIN_QUANTITY_TO_SHOW);
         _quantity.text = item.Quantity.ToString();
         _button.onClick.RemoveAllListeners();
         _button.onClick.AddListener(V_MainButtonPressed);
@@ -33,18 +36,14 @@ public class scr_UI_InventoryItem: MonoBehaviour
     {
         _icon.sprite = null;
         _icon.color = Color.black;
-        _quantity.text = "0";
+        _backGroundQuantity.SetActive(false);
         _button.onClick.RemoveAllListeners();
-    }
-
-    public void V_ChangeItemQuantity()
-    {
-
     }
 
     private void V_MainButtonPressed()
     {
         _btnDelete.gameObject.SetActive(true);
+        _btnDelete.onClick.RemoveAllListeners();
         _btnDelete.onClick.AddListener(V_ButtonDeletePressed);
         scr_EventBus.Instance.ItemButtonPressed?.Invoke(_item);
     }
