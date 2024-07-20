@@ -2,10 +2,13 @@
 using System.IO;
 using UnityEngine;
 
+/// <summary>
+/// This script provides posibility to create JSON for all items according files in certain folder
+/// </summary>
 public class scr_ItemsLoader : MonoBehaviour
 {
-    [SerializeField] private D_Items _d_Items;
     [SerializeField] private string itemsFolderPath = "Items";
+    [SerializeField] private D_Items _d_Items;
     private scr_JSONHandler _jsonHandler;
 
     private void Awake()
@@ -54,8 +57,14 @@ public class scr_ItemsLoader : MonoBehaviour
 
         Debug.Log("Items loaded successfully.");
 
-        _jsonHandler.V_SaveDataToJSONFile(itemsFolderPath + ".json", dItems);
+        
 
         return dItems;
+    }
+
+    public void V_SaveItemsToFile()
+    {
+        _jsonHandler.V_SaveDataToJSONFile(itemsFolderPath + ".json", _d_Items);
+        Debug.Log("Items saved to file.");
     }
 }

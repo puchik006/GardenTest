@@ -1,8 +1,9 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
-public class scr_Weapon: MonoBehaviour
+public class scr_Weapon : MonoBehaviour
 {
-    [SerializeField] private scr_Weapon_Data _data; 
+    [SerializeField] private scr_Weapon_Data _data;
     [SerializeField] private Transform _firePoint;
     private SpriteRenderer _weaponSprite;
     private scr_Weapon_Bullet _weaponBullet;
@@ -13,7 +14,8 @@ public class scr_Weapon: MonoBehaviour
     void Awake()
     {
         _weaponSprite = GetComponent<SpriteRenderer>();
-        scr_EventBus.Instance.FireButtonPressed += OnFireButtonPressed;
+        scr_EventBus.Instance.FireButtonPressed += V_OnFireButtonPressed;
+        scr_EventBus.Instance.AmmoConsumed += V_OnAmmoConsumed;
     }
 
     void Start()
@@ -30,20 +32,33 @@ public class scr_Weapon: MonoBehaviour
         _fireRate = _data.FireRate;
     }
 
-    private void OnFireButtonPressed()
+    private void V_OnFireButtonPressed()
+    {
+        scr_EventBus.Instance.TryedToConsumeAmmo?.Invoke();
+    }
+
+    private void V_OnAmmoConsumed()
     {
         if (Time.time >= _nextFireTime)
         {
-            FireBullet();
+            V_FireBullet();
             _nextFireTime = Time.time + 1f / _fireRate;
         }
     }
 
-    private void FireBullet()
+
+    private void V_FireBullet()
     {
-        var bullet = Instantiate(_weaponBullet, _firePoint.position, _weaponBullet.transform.rotation);
-        bullet.V_Initialise(_bulletSpeed);
+        {
+            var bullet = Instantiate(_weaponBullet, _firePoint.position, _weaponBullet.transform.rotation);
+            bullet.V_Initialise(_bulletSpeed);
+        }
     }
+}
+
+public class scr_Weapon_Model
+{
+
 }
 
 

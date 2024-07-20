@@ -35,6 +35,6 @@ public class scr_UI_DropableItem : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        scr_EventBus.Instance.PlayerTryingToTakeItem(new D_InventoryItem { ItemName = _itemName, Quantity = 1});
+        scr_EventBus.Instance.PlayerTryedToTakeItem(new D_InventoryItem { ItemName = _itemName, Quantity = 1});
     }
 }

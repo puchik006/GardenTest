@@ -1,5 +1,6 @@
-﻿using System;
+﻿using UnityEngine;
 using static scr_General;
+using static UnityEditor.Progress;
 
 public class scr_Inventory
 {
@@ -11,8 +12,9 @@ public class scr_Inventory
     public scr_Inventory()
     {
         _jsonHandler = new scr_JSONHandler();
-        scr_EventBus.Instance.PlayerTryingToTakeItem += V_OnPlayerTakeItem;
+        scr_EventBus.Instance.PlayerTryedToTakeItem += V_OnPlayerTakeItem;
         scr_EventBus.Instance.ButtonDeletePressed += V_OnButtonDeletePressed;
+        scr_EventBus.Instance.TryedToConsumeAmmo += V_OnTryedToConsumeAmmo;
         V_CheckInventory();
     }
 
@@ -39,7 +41,7 @@ public class scr_Inventory
             }
             else
             {
-                Console.WriteLine("Inventory is full!");
+                Debug.Log("Inventory is full!");
             }
         }
 
@@ -58,6 +60,48 @@ public class scr_Inventory
         }
     }
 
+    //Trying to consume just an ammo in inventory, without cheking certain type
+    private void V_OnTryedToConsumeAmmo()
+    {
+        var items = _jsonHandler.V_ReadDataFromJSONFile<D_Items>("Items.json");
+
+        var ammoTypeListOfItems = items.Items.FindAll(i => i.Type == E_ItemType.Ammo);
+
+        foreach (var ammoType in ammoTypeListOfItems)
+        {
+            D_InventoryItem existingAmmo = _d_Inventory.ListOfItems.Find(i => i.ItemName == ammoType.Name);
+
+            if (existingAmmo.ItemName != null)
+            {
+                D_InventoryItem itemToConsume = new D_InventoryItem { ItemName = existingAmmo.ItemName, Quantity = 1 }; 
+
+                if (existingAmmo.Quantity >= itemToConsume.Quantity)
+                {
+                    existingAmmo.Quantity -= itemToConsume.Quantity;
+                    int index = _d_Inventory.ListOfItems.FindIndex(i => i.ItemName == existingAmmo.ItemName);
+                    _d_Inventory.ListOfItems[index] = existingAmmo;
+
+                    if (existingAmmo.Quantity == 0)
+                    {
+                        _d_Inventory.ListOfItems.Remove(existingAmmo);
+                    }
+
+                    V_UpdateInventory(existingAmmo);
+
+                    scr_EventBus.Instance.AmmoConsumed?.Invoke();
+                    return; 
+                }
+                else
+                {
+                    Debug.Log("Not enough ammo!");
+                    return; 
+                }
+            }
+        }
+
+        Debug.Log("No matching ammo found in inventory!");
+    }
+
     private void V_UpdateInventory(D_InventoryItem item)
     {
         _jsonHandler.V_SaveDataToJSONFile(m_General.GET_InventoryName, _d_Inventory);
@@ -67,8 +111,9 @@ public class scr_Inventory
 
     ~scr_Inventory()
     {
-        scr_EventBus.Instance.PlayerTryingToTakeItem -= V_OnPlayerTakeItem;
+        scr_EventBus.Instance.PlayerTryedToTakeItem -= V_OnPlayerTakeItem;
         scr_EventBus.Instance.ButtonDeletePressed -= V_OnButtonDeletePressed;
+        scr_EventBus.Instance.TryedToConsumeAmmo -= V_OnTryedToConsumeAmmo;
     }
 }
 
