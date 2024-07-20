@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using static scr_General;
-using static UnityEditor.Progress;
 
 public class scr_Inventory
 {
@@ -21,6 +20,7 @@ public class scr_Inventory
     public void V_CheckInventory()
     {
         _d_Inventory = _jsonHandler.V_ReadDataFromJSONFile<D_Inventory>("Inventory.json"); // CHANGE IT!
+        V_CheckAmmoQuantity();
     }
 
     private void V_OnPlayerTakeItem(D_InventoryItem item)
@@ -100,6 +100,28 @@ public class scr_Inventory
         }
 
         Debug.Log("No matching ammo found in inventory!");
+    }
+
+    //Check ammo quantity
+    private void V_CheckAmmoQuantity()
+    {
+        var items = _jsonHandler.V_ReadDataFromJSONFile<D_Items>("Items.json");
+
+        var ammoTypeListOfItems = items.Items.FindAll(i => i.Type == E_ItemType.Ammo);
+
+        foreach (var ammoType in ammoTypeListOfItems)
+        {
+            D_InventoryItem existingAmmo = _d_Inventory.ListOfItems.Find(i => i.ItemName == ammoType.Name);
+
+            if (existingAmmo.ItemName != null)
+            {
+                scr_EventBus.Instance.AmmoQuantityChecked?.Invoke(existingAmmo.Quantity);
+            }
+            else
+            {
+                scr_EventBus.Instance.AmmoQuantityChecked?.Invoke(0);
+            }
+        }
     }
 
     private void V_UpdateInventory(D_InventoryItem item)

@@ -4856,9 +4856,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d385c393f8ea85f4c8cb75f91d30d32c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemsFolderPath: Items
   _d_Items:
     Items: []
-  itemsFolderPath: Items
 --- !u!4 &1344491073
 Transform:
   m_ObjectHideFlags: 0
@@ -5722,8 +5722,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _btnInventory: {fileID: 1222920061}
-  _btnFire: {fileID: 337229229}
   _inventoryPanel: {fileID: 1467599189}
+  _btnFire: {fileID: 337229229}
+  _txtAmmoCount: {fileID: 211366258}
 --- !u!1 &1823635232
 GameObject:
   m_ObjectHideFlags: 0

@@ -11,13 +11,23 @@ public class scr_ItemsLoader : MonoBehaviour
     [SerializeField] private D_Items _d_Items;
     private scr_JSONHandler _jsonHandler;
 
-    private void Awake()
+    void Awake()
     {
         _jsonHandler = new scr_JSONHandler();
-        _d_Items = V_LoadItems();
     }
 
-    private D_Items V_LoadItems()
+    public void V_LoadItemsFromFolders()
+    {
+        _d_Items = GetItems();
+    }
+
+    public void V_SaveItemsToFile()
+    {
+        _jsonHandler.V_SaveDataToJSONFile(itemsFolderPath + ".json", _d_Items);
+        Debug.Log("Items saved to file.");
+    }
+
+    private D_Items GetItems()
     {
         string baseDir = Path.Combine(Application.persistentDataPath, itemsFolderPath);
 
@@ -62,9 +72,5 @@ public class scr_ItemsLoader : MonoBehaviour
         return dItems;
     }
 
-    public void V_SaveItemsToFile()
-    {
-        _jsonHandler.V_SaveDataToJSONFile(itemsFolderPath + ".json", _d_Items);
-        Debug.Log("Items saved to file.");
-    }
+
 }

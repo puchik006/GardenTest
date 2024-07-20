@@ -56,10 +56,5 @@ public class scr_Weapon : MonoBehaviour
     }
 }
 
-public class scr_Weapon_Model
-{
-
-}
-
 
 
