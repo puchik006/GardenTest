@@ -7,7 +7,7 @@ public class scr_UI_Inventory: MonoBehaviour
     [SerializeField] private GameObject _inventoryPanel;
     private scr_Inventory _inventory;
 
-    void Awake()
+    public void V_Initialise()
     {
         _inventory = new scr_Inventory();
         scr_EventBus.Instance.InventoryOpened += V_OnInventoryOpened;

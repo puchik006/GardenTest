@@ -109,6 +109,12 @@ public class scr_Inventory
 
         var ammoTypeListOfItems = items.Items.FindAll(i => i.Type == E_ItemType.Ammo);
 
+        if (ammoTypeListOfItems.Count == 0)
+        {
+            Debug.Log("asdasd");
+            scr_EventBus.Instance.AmmoQuantityChecked?.Invoke(0);
+        }
+
         foreach (var ammoType in ammoTypeListOfItems)
         {
             D_InventoryItem existingAmmo = _d_Inventory.ListOfItems.Find(i => i.ItemName == ammoType.Name);

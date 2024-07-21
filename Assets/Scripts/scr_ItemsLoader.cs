@@ -9,12 +9,12 @@ public class scr_ItemsLoader : MonoBehaviour
 {
     [SerializeField] private string itemsFolderPath = "Items";
     [SerializeField] private D_Items _d_Items;
-    private scr_JSONHandler _jsonHandler;
+    private scr_JSONHandler _jsonHandler = new();
 
-    void Awake()
-    {
-        _jsonHandler = new scr_JSONHandler();
-    }
+    //void Awake()
+    //{
+    //    _jsonHandler = new scr_JSONHandler();
+    //}
 
     public void V_LoadItemsFromFolders()
     {
@@ -67,10 +67,6 @@ public class scr_ItemsLoader : MonoBehaviour
 
         Debug.Log("Items loaded successfully.");
 
-        
-
         return dItems;
     }
-
-
 }
