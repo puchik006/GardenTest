@@ -16,5 +16,6 @@ MonoBehaviour:
   _picture: {fileID: 21300000, guid: d9679c3a4a3e2f344b2230867197e2ce, type: 3}
   _firePoint: {x: 0.28, y: 0}
   _bulletSpeed: 10
+  _bulletDamage: 10
   _fireRate: 10
-  _Weapon_Bullet: {fileID: 529420531241817342, guid: 4f4f7d4d6151d9c48923a588874cd3a3, type: 3}
+  _weapon_Bullet: {fileID: 529420531241817342, guid: 4f4f7d4d6151d9c48923a588874cd3a3, type: 3}

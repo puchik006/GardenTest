@@ -3,10 +3,12 @@
 public class scr_Weapon_Bullet : MonoBehaviour
 {
     private float _speed;
+    private int _damage;
 
-    public void V_Initialise(float speed)
+    public void V_Initialise(float speed, int damage)
     {
         _speed = speed;
+        _damage = damage;
     }
 
     void Update()
@@ -14,10 +16,21 @@ public class scr_Weapon_Bullet : MonoBehaviour
         transform.Translate(Vector2.down * _speed * Time.deltaTime);
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("Bullet hit " + collision.name);
-        Destroy(gameObject); 
+        Debug.Log("Bullet hit " + collision.gameObject.name);
+
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            var enemy = collision.gameObject.GetComponent<scr_Enemy>();
+
+            if (enemy != null)
+            {
+                enemy.V_TakeDamage(_damage); 
+            }
+        }
+
+        Destroy(gameObject);
     }
 }
 

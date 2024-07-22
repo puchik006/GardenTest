@@ -3,14 +3,22 @@
 public class scr_Enemy : MonoBehaviour
 {
     [SerializeField] private scr_Enemy_Data _data;
+    private Rigidbody2D _rigidbody2D;
     private Transform _playerTransform;
     private bool _isChasing = false;
-    private Rigidbody2D _rigidbody2D;
 
-    void Awake()
+    [SerializeField] private int _HP;
+
+    void OnValidate()
     {
         _rigidbody2D = GetComponent<Rigidbody2D>();
     }
+
+    void Awake()
+    {
+        _HP = _data.HP;
+    }
+
 
     void Update()
     {
@@ -46,5 +54,21 @@ public class scr_Enemy : MonoBehaviour
             Debug.Log("Enemy hit the player!");
             // Add damage logic here if needed
         }
+    }
+
+    public void V_TakeDamage(int damage)
+    {
+        _HP -= damage;
+        Debug.Log("Enemy took " + damage + " damage, health now " + _HP);
+
+        if (_HP <= 0)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    public void V_DropItem()
+    {
+
     }
 }

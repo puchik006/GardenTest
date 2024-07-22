@@ -7,6 +7,7 @@ public class scr_Weapon : MonoBehaviour
     private SpriteRenderer _weaponSprite;
     private scr_Weapon_Bullet _weaponBullet;
     private float _bulletSpeed;
+    private int _bulletDamage;
     private float _fireRate;
     private float _nextFireTime;
 
@@ -28,6 +29,7 @@ public class scr_Weapon : MonoBehaviour
         _firePoint.localPosition = _data.FirePoint;
         _weaponBullet = _data.Weapon_Bullet;
         _bulletSpeed = _data.BulletSpeed;
+        _bulletDamage = _data.BulletDamage;
         _fireRate = _data.FireRate;
     }
 
@@ -50,7 +52,7 @@ public class scr_Weapon : MonoBehaviour
     {
         {
             var bullet = Instantiate(_weaponBullet, _firePoint.position, _weaponBullet.transform.rotation);
-            bullet.V_Initialise(_bulletSpeed);
+            bullet.V_Initialise(_bulletSpeed, _bulletDamage);
         }
     }
 }
