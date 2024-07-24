@@ -8,7 +8,7 @@ public class scr_UI_DropableItem : MonoBehaviour
     private SpriteRenderer _spriteRenderer;
     private scr_Media_ImageLoader _imageLoader;
 
-    private void Awake()
+    void Awake()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _imageLoader = new scr_Media_ImageLoader();

@@ -9,14 +9,10 @@ public class scr_Enemy : MonoBehaviour
 
     [SerializeField] private int _HP;
 
-    void OnValidate()
-    {
-        _rigidbody2D = GetComponent<Rigidbody2D>();
-    }
-
     void Awake()
     {
         _HP = _data.HP;
+        _rigidbody2D = GetComponent<Rigidbody2D>();
     }
 
 
@@ -38,21 +34,21 @@ public class scr_Enemy : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player"))
-        {
-            _isChasing = false;
-            _rigidbody2D.velocity = Vector2.zero; // Stop the enemy
-        }
-    }
+    //private void OnTriggerExit2D(Collider2D collision)
+    //{
+    //    if (collision.CompareTag("Player"))
+    //    {
+    //        _isChasing = false;
+    //        _rigidbody2D.velocity = Vector2.zero; // Stop the enemy
+    //    }
+    //}
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.collider.CompareTag("Player"))
         {
             Debug.Log("Enemy hit the player!");
-            // Add damage logic here if needed
+
         }
     }
 
@@ -63,11 +59,12 @@ public class scr_Enemy : MonoBehaviour
 
         if (_HP <= 0)
         {
+            V_DropItem();
             Destroy(gameObject);
         }
     }
 
-    public void V_DropItem()
+    private void V_DropItem()
     {
 
     }
