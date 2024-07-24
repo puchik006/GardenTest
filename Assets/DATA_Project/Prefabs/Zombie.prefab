@@ -213,6 +213,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _data: {fileID: 11400000, guid: 06491b360334d8d41ade72bcfc44a638, type: 2}
+  _dropableItem: {fileID: 7850592683991676681, guid: 45d0c9d3895be7a4a9185e32816c908e, type: 3}
   _HP: 100
 --- !u!1 &517227834984332366
 GameObject:

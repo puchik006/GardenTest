@@ -32,6 +32,9 @@ public class scr_EventBus
     public Action AmmoConsumed;
     public Action<int> AmmoQuantityChecked;
 
+    //Enemy
+
+
     //GamaPhase
     //public Action<E_GamePhase> GamePhaseUpdate;
 

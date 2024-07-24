@@ -3,16 +3,19 @@
 public class scr_Enemy : MonoBehaviour
 {
     [SerializeField] private scr_Enemy_Data _data;
+    [SerializeField] private scr_UI_DropableItem _dropableItem;
     private Rigidbody2D _rigidbody2D;
     private Transform _playerTransform;
     private bool _isChasing = false;
+    private string _itemToDrop;
 
     [SerializeField] private int _HP;
 
     void Awake()
     {
-        _HP = _data.HP;
         _rigidbody2D = GetComponent<Rigidbody2D>();
+        _HP = _data.HP;
+        _itemToDrop = _data.ItemToDrop;
     }
 
 
@@ -66,6 +69,8 @@ public class scr_Enemy : MonoBehaviour
 
     private void V_DropItem()
     {
-
+        Debug.Log($"Drop item {_itemToDrop}");
+        var item = Instantiate(_dropableItem, transform.position, Quaternion.identity);
+        item.V_InitialiseItem(_itemToDrop);
     }
 }
