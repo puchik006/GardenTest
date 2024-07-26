@@ -9,7 +9,9 @@ public class scr_UI_Handler: MonoBehaviour
     [SerializeField] private Button _btnFire;
     [SerializeField] private TMP_Text _txtAmmoCount;
 
-
+    /// <summary>
+    /// Initialise behavoiur of all UI items (buttons fire and inventory, inventory panel and text of ammo quantity
+    /// </summary>
     public void V_Initialise()
     {
         scr_EventBus.Instance.AmmoQuantityChecked += V_OnAmmoQuantityChecked;

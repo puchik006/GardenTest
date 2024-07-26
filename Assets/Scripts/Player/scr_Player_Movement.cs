@@ -26,7 +26,6 @@ public class scr_Player_Movement : MonoBehaviour
 
     void FixedUpdate()
     {
-        // Move the player
         rb.MovePosition(rb.position + movement * _moveSpeed * Time.fixedDeltaTime);
     }
 }

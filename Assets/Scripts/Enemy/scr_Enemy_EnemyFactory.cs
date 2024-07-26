@@ -5,23 +5,27 @@ using UnityEngine.Tilemaps;
 public class scr_Enemy_EnemyFactory: MonoBehaviour
 {
     [SerializeField] private Tilemap _tilemap;
-    [SerializeField] private List<GameObject> _enemyPrefabs;
-    private List<scr_Enemy> _listOfEnemys;
+    [SerializeField] private List<scr_Enemy> _enemyPrefabs;
+    private List<scr_Enemy> _listOfEnemys = new();
+    private const int MAX_QUANTITY_OF_ENEMIES = 3;
 
-    void Awake()
+    /// <summary>
+    /// Instantiate randomly on map some quantity of enemies
+    /// </summary>
+    public void V_InstaniateEnemies()
     {
-        V_InstaniateEnemy();
+        for (int i = 0; i < MAX_QUANTITY_OF_ENEMIES; i++)
+        {
+            int enemyIndex = Random.Range(0, _enemyPrefabs.Count);
+            Vector3Int randomPosition = GetRandomPositionInTilemap();
+            _listOfEnemys.Add(Instantiate(_enemyPrefabs[enemyIndex], _tilemap.CellToWorld(randomPosition), Quaternion.identity));
+        }
     }
 
-    public void V_InstaniateEnemy()
+    public void V_DestroyAllEnemies()
     {
-        Vector3Int randomPosition = GetRandomPositionInTilemap();
-        Instantiate(_enemyPrefabs[0], _tilemap.CellToWorld(randomPosition) + new Vector3(0.5f, 0.5f, 0), Quaternion.identity);
-    }
-
-    public void V_DestriyAllEnemies()
-    {
-
+        _listOfEnemys.ForEach(e => Destroy(e.gameObject));
+        _listOfEnemys.Clear();
     }
 
     Vector3Int GetRandomPositionInTilemap()
@@ -34,7 +38,6 @@ public class scr_Enemy_EnemyFactory: MonoBehaviour
             return Vector3Int.zero;
         }
 
-        // Get the minimum and maximum positions within the tilemap
         int minX = bounds.xMin;
         int maxX = bounds.xMax;
         int minY = bounds.yMin;
@@ -42,7 +45,6 @@ public class scr_Enemy_EnemyFactory: MonoBehaviour
 
         Vector3Int randomPosition;
 
-        // Randomly select a tile position that contains a tile
         do
         {
             int randomX = Random.Range(minX, maxX);

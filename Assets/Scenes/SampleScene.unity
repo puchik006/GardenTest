@@ -639,8 +639,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _tilemap: {fileID: 1312620267}
   _enemyPrefabs:
-  - {fileID: 517227834644261277, guid: 20f38e57b73c31f4bb2d7f4dd26d8ac7, type: 3}
-  - {fileID: 1094351894805797646, guid: 2db3e5eb15c8cc6408549ee8acea1bc1, type: 3}
+  - {fileID: 517227834644261254, guid: 20f38e57b73c31f4bb2d7f4dd26d8ac7, type: 3}
+  - {fileID: 1094351894805798131, guid: 2db3e5eb15c8cc6408549ee8acea1bc1, type: 3}
 --- !u!4 &274330398
 Transform:
   m_ObjectHideFlags: 0
@@ -1537,8 +1537,9 @@ GameObject:
   - component: {fileID: 860999339}
   - component: {fileID: 860999338}
   - component: {fileID: 860999337}
+  - component: {fileID: 860999340}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: HealthCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1626,6 +1627,48 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 4
   m_TargetDisplay: 0
+--- !u!114 &860999340
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 860999335}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91a89aaa177983040bf0b985fcd559d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _healthLevel: {fileID: 1557914657}
+  _gradient:
+    serializedVersion: 2
+    key0: {r: 1, g: 0, b: 0, a: 1}
+    key1: {r: 1, g: 0.5959666, b: 0, a: 1}
+    key2: {r: 1, g: 0.9856311, b: 0, a: 0}
+    key3: {r: 0.058127522, g: 1, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 24094
+    ctime2: 45489
+    ctime3: 65535
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_NumColorKeys: 4
+    m_NumAlphaKeys: 2
 --- !u!1 &862755273
 GameObject:
   m_ObjectHideFlags: 0
@@ -2140,7 +2183,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _ui_Handler: {fileID: 1758717808}
-  _ui_inventory: {fileID: 1758717807}
+  _ui_Inventory: {fileID: 1758717807}
+  _enemyFactory: {fileID: 274330397}
 --- !u!4 &1233753327
 Transform:
   m_ObjectHideFlags: 0
@@ -4546,7 +4590,7 @@ GameObject:
   - component: {fileID: 1557914658}
   - component: {fileID: 1557914657}
   m_Layer: 5
-  m_Name: Image
+  m_Name: HP Level
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4585,14 +4629,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 1, b: 0.1019609, a: 1}
+  m_Color: {r: 0.21315527, g: 1, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -1834799983, guid: ef95a64d3478fba429a1ecdd513c6ee8, type: 3}
+  m_Sprite: {fileID: 1581241194, guid: ef95a64d3478fba429a1ecdd513c6ee8, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1

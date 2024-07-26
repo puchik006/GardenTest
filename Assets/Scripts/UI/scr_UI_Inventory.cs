@@ -5,11 +5,11 @@ public class scr_UI_Inventory: MonoBehaviour
 {
     [SerializeField] private List<scr_UI_InventoryItem> _listOfItems;
     [SerializeField] private GameObject _inventoryPanel;
-    private scr_Inventory _inventory;
+    private scr_Inventory _inventory; 
 
-    public void V_Initialise()
+    public void V_Initialise(scr_Inventory inventory) 
     {
-        _inventory = new scr_Inventory();
+        _inventory = inventory;
         scr_EventBus.Instance.InventoryOpened += V_OnInventoryOpened;
         scr_EventBus.Instance.PlayerTookItem += V_OnPlayerTookItem;
         scr_EventBus.Instance.ButtonDeletePressed += V_OnButtonDeletePressed;

@@ -1,6 +1,5 @@
 ﻿using System.IO;
 using UnityEngine;
-using UnityEngine.UI;
 
 [RequireComponent(typeof(Collider2D))]
 public class scr_UI_DropableItem : MonoBehaviour
@@ -14,6 +13,11 @@ public class scr_UI_DropableItem : MonoBehaviour
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _imageLoader = new scr_Media_ImageLoader();
        // V_InitialiseItem(_itemName);
+    }
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        scr_EventBus.Instance.PlayerTryedToTakeItem(new D_InventoryItem { ItemName = _itemName, Quantity = 1 }); // Quantity should be taken from some data
     }
 
     public void V_InitialiseItem(string itemName)
@@ -35,14 +39,4 @@ public class scr_UI_DropableItem : MonoBehaviour
             Debug.LogError("Failed to load sprite from path: " + imagePath);
         }
     }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        scr_EventBus.Instance.PlayerTryedToTakeItem(new D_InventoryItem { ItemName = _itemName, Quantity = 1}); // Quantity should be taken from some data
-    }
-}
-
-public class scr_UI_HealthBar: MonoBehaviour
-{
-    [SerializeField] private Image _healthBar;
 }
