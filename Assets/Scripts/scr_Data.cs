@@ -30,6 +30,7 @@ public struct D_Player
     public string Name;
     public int Health;
     public int Level;
+    public int BodyCount;
 }
 
 //All possible items

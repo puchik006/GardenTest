@@ -1,16 +1,18 @@
 ﻿using UnityEngine;
-using static scr_General;
+using System.Collections.Generic;
 
 public class scr_Inventory
 {
     private D_Inventory _d_Inventory;
     public D_Inventory D_Inventory { get => _d_Inventory; }
-    private scr_JSONHandler _jsonHandler;
+    private scr_FileManager_JSONHandler _jsonHandler;
     private const int INVENTORY_MAX = 7;
+    private string _inventoryDataFileName = "Inventory.json";
+    private string _itemCatalogFileName = "Items.json";
 
     public scr_Inventory()
     {
-        _jsonHandler = new scr_JSONHandler();
+        _jsonHandler = new scr_FileManager_JSONHandler();
         scr_EventBus.Instance.PlayerTryedToTakeItem += V_OnPlayerTakeItem;
         scr_EventBus.Instance.ButtonDeletePressed += V_OnButtonDeletePressed;
         scr_EventBus.Instance.TryedToConsumeAmmo += V_OnTryedToConsumeAmmo;
@@ -19,7 +21,30 @@ public class scr_Inventory
 
     public void V_CheckInventory()
     {
-        _d_Inventory = _jsonHandler.V_ReadDataFromJSONFile<D_Inventory>("Inventory.json"); // CHANGE IT!
+
+        if (_jsonHandler.Is_JSON_Exist(_inventoryDataFileName))
+        {
+            _d_Inventory = _jsonHandler.V_ReadDataFromJSONFile<D_Inventory>(_inventoryDataFileName);
+        }
+        else
+        {
+            var initiateInventory = new D_Inventory()
+            {
+                ListOfItems = new List<D_InventoryItem>()
+                {
+                    new D_InventoryItem()
+                    {
+                        ItemName = "5.45x39",
+                        Quantity = 30
+                    }
+                }
+            };
+
+            _jsonHandler.V_SaveDataToJSONFile(_inventoryDataFileName, initiateInventory);
+            _d_Inventory = _jsonHandler.V_ReadDataFromJSONFile<D_Inventory>(_inventoryDataFileName);
+        }
+
+        
         V_CheckAmmoQuantity();
     }
 
@@ -63,7 +88,7 @@ public class scr_Inventory
     //Trying to consume just an ammo in inventory, without cheking certain type
     private void V_OnTryedToConsumeAmmo()
     {
-        var items = _jsonHandler.V_ReadDataFromJSONFile<D_Items>("Items.json");
+        var items = _jsonHandler.V_ReadDataFromJSONFile<D_Items>(_itemCatalogFileName);
 
         var ammoTypeListOfItems = items.Items.FindAll(i => i.Type == E_ItemType.Ammo);
 
@@ -105,13 +130,12 @@ public class scr_Inventory
     //Check ammo quantity
     private void V_CheckAmmoQuantity()
     {
-        var items = _jsonHandler.V_ReadDataFromJSONFile<D_Items>("Items.json");
+        var items = _jsonHandler.V_ReadDataFromJSONFile<D_Items>(_itemCatalogFileName);
 
         var ammoTypeListOfItems = items.Items.FindAll(i => i.Type == E_ItemType.Ammo);
 
         if (ammoTypeListOfItems.Count == 0)
         {
-            Debug.Log("asdasd");
             scr_EventBus.Instance.AmmoQuantityChecked?.Invoke(0);
         }
 
@@ -132,7 +156,7 @@ public class scr_Inventory
 
     private void V_UpdateInventory(D_InventoryItem item)
     {
-        _jsonHandler.V_SaveDataToJSONFile(m_General.GET_InventoryName, _d_Inventory);
+        _jsonHandler.V_SaveDataToJSONFile(_inventoryDataFileName, _d_Inventory);
         V_CheckInventory();
         scr_EventBus.Instance.PlayerTookItem?.Invoke(item);
     }

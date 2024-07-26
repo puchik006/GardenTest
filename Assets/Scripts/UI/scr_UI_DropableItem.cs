@@ -7,12 +7,12 @@ public class scr_UI_DropableItem : MonoBehaviour
     [SerializeField] private string _itemName; // key to D_Item
     private SpriteRenderer _spriteRenderer;
     private scr_Media_ImageLoader _imageLoader;
+    private string _itemsCatalogFolderName = "Items";
 
     void Awake()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _imageLoader = new scr_Media_ImageLoader();
-       // V_InitialiseItem(_itemName);
     }
 
     void OnTriggerEnter2D(Collider2D collision)
@@ -26,7 +26,7 @@ public class scr_UI_DropableItem : MonoBehaviour
 
         _itemName = itemName;
 
-        string imagePath = Path.Combine(Application.persistentDataPath, "Items", itemName, itemName + ".png"); //CHANGE IT!!!
+        string imagePath = Path.Combine(Application.persistentDataPath, _itemsCatalogFolderName, itemName, itemName + ".png");
 
         Sprite sprite = _imageLoader.GetSpriteFromPath(imagePath);
 

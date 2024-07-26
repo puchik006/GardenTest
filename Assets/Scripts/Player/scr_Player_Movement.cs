@@ -3,7 +3,7 @@ using UnityEngine;
 public class scr_Player_Movement : MonoBehaviour
 {
     [SerializeField] private float _moveSpeed = 5f;
-    [SerializeField] private Joystick _joystick; 
+    [SerializeField] private scr_UI_SimpleJoystick _joystick;
 
     private Rigidbody2D rb;
     private Vector2 movement;
@@ -15,8 +15,11 @@ public class scr_Player_Movement : MonoBehaviour
 
     void Update()
     {
-        movement.x = _joystick.Horizontal;
-        movement.y = _joystick.Vertical;
+        float joystickHorizontal = _joystick.Horizontal;
+        float joystickVertical = _joystick.Vertical;
+
+        movement.x = joystickHorizontal;
+        movement.y = joystickVertical;
 
         if (movement.magnitude > 1)
         {
@@ -26,6 +29,6 @@ public class scr_Player_Movement : MonoBehaviour
 
     void FixedUpdate()
     {
-        rb.MovePosition(rb.position + movement * _moveSpeed * Time.fixedDeltaTime);
+        rb.velocity = movement * _moveSpeed;
     }
 }

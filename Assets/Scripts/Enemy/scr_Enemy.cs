@@ -4,7 +4,7 @@ public class scr_Enemy : MonoBehaviour
 {
     [SerializeField] private scr_Enemy_Data _data;
     [SerializeField] private scr_UI_DropableItem _dropableItemPrefab;
-    [SerializeField] private scr_UI_HealthBar _healthBarPrefab;
+    [SerializeField] private scr_UI_HealthBar _healthBar;
     private Rigidbody2D _rigidbody2D;
     private Transform _playerTransform;
     private bool _isChasing = false;
@@ -39,21 +39,12 @@ public class scr_Enemy : MonoBehaviour
         }
     }
 
-    //private void OnTriggerExit2D(Collider2D collision)
-    //{
-    //    if (collision.CompareTag("Player"))
-    //    {
-    //        _isChasing = false;
-    //        _rigidbody2D.velocity = Vector2.zero; // Stop the enemy
-    //    }
-    //}
-
-    void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionStay2D(Collision2D collision)
     {
         if (collision.collider.CompareTag("Player"))
         {
             Debug.Log("Enemy hit the player!");
-
+            collision.gameObject.GetComponent<scr_Player>().V_TakeDamage(_data.HitDamage);
         }
     }
 
@@ -61,13 +52,14 @@ public class scr_Enemy : MonoBehaviour
     {
         _HP -= damage;
 
-        _healthBarPrefab.V_ChangeHealthBalue(damage/_fullHP);
+        _healthBar.V_ChangeHealthBalue(damage/_fullHP);
 
-        Debug.Log("Enemy took " + damage + " damage, health now " + _HP);
+        Debug.Log("Enemy accept " + damage + " damage, health now " + _HP);
 
         if (_HP <= 0)
         {
             V_DropItem();
+            scr_EventBus.Instance.EnemyDestroyed?.Invoke();
             Destroy(gameObject);
         }
     }

@@ -215,7 +215,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _data: {fileID: 11400000, guid: 06491b360334d8d41ade72bcfc44a638, type: 2}
   _dropableItemPrefab: {fileID: 7850592683991676681, guid: 45d0c9d3895be7a4a9185e32816c908e, type: 3}
-  _healthBarPrefab: {fileID: 6616166614178990747}
+  _healthBar: {fileID: 6616166614178990747}
 --- !u!1 &517227834984332366
 GameObject:
   m_ObjectHideFlags: 0

@@ -8,6 +8,8 @@ public class scr_Player_Camera : MonoBehaviour
 
     void LateUpdate()
     {
+        if (_player == null) return;
+
         Vector3 desiredPosition = _player.position + _offset;
 
         desiredPosition.z = transform.position.z;

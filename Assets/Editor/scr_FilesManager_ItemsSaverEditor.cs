@@ -10,9 +10,9 @@ public class scr_FilesManager_ItemsSaverEditor : Editor
 
         scr_FilesManager_ItemsSaver script = (scr_FilesManager_ItemsSaver)target;
 
-        if (GUILayout.Button("Load all items"))
+        if (GUILayout.Button("Save all items"))
         {
-            script.V_LoadAllItems();
+            script.V_SaveAllItems();
         }
 
     }

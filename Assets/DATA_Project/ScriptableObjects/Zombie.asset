@@ -16,3 +16,4 @@ MonoBehaviour:
   _hp: 100
   _speed: 1
   _itemToDrop: Makarov
+  _hitDamage: 2
